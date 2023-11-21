@@ -328,7 +328,33 @@ def main(page: ft.Page):
   
     def restaurar(e):
         # radio selecione
-        print(radioGroup.value)
+        id = int(radioGroup.value)
+        conn = sqlite3.connect("./assets/database.db")
+        cur = conn.cursor()
+           
+        dataTable.columns=[
+            ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text(""))
+        ],
+        # sql = "SELECT * FROM notas where shape_id = ? and botao in ('1','2,'3,')";
+        # cur.execute(sql, [id]) 
+        # bug => arrumar
+        dataTable.rows.append(ft.DataRow(
+            cells=[
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="1")),
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="2")),
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="3")),
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="4")),
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="5")),
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="6"))
+            ],
+        ))
+        cur.close()
+        conn.close()
         page.update()
 
     page.add(dataTable)    
