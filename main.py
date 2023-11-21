@@ -131,7 +131,6 @@ def main(page: ft.Page):
         sql = "INSERT INTO shapes (nome) values (?) RETURNING id;"
         cur.execute(sql, [dt_string])      
         id = cur.fetchone()[0]
-        # print(id)
         conn.commit()          
         i = 1        
         for botao in violao:
@@ -143,11 +142,14 @@ def main(page: ft.Page):
         cur.close()
         conn.close()
         limpar(e)
-        # lv.append(str(id)+"-"+dt_string)
+        # lv.append(str(id)+"-"+dt_string)       
+        lista_shapes()
         open_dlg(e)    
 
     def lista_shapes():
-        # lv.controls.
+        lv.controls = []
+        # global lv
+        # lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
         cur.execute("SELECT * from shapes order by id;")
@@ -157,11 +159,8 @@ def main(page: ft.Page):
         conn.close()
         page.update()
 
- 
-
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-    lv.auto_scroll = True
-    
+    lv.auto_scroll = True    
 
     dlg = ft.AlertDialog(
         title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
