@@ -144,7 +144,9 @@ def main(page: ft.Page):
         limpar(e)
         # lv.append(str(id)+"-"+dt_string)       
         lista_shapes()
-        open_dlg(e)    
+        open_dlg(e)  
+
+    radioGroup = ft.RadioGroup()
 
     def lista_shapes():
         lv.controls = []
@@ -152,12 +154,21 @@ def main(page: ft.Page):
         # lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
-        cur.execute("SELECT * from shapes order by id;")
+        cur.execute("SELECT * from shapes order by id;")        
+        vetShape = []
         for shape in cur.fetchall():
-            lv.controls.append(ft.Text(str(shape[0])+"-"+shape[1]))
+            vetShape.append(ft.Radio(value=str(shape[0]), label=shape[1]))
+        if (len(vetShape) > 0):
+            radioGroup.content = ft.Column(vetShape)
+            lv.controls.append(radioGroup)
         cur.close()
         conn.close()
         page.update()
+    
+    # def checkbox_changed(e):
+    #     print("oi")
+    #     # e.control.value = "ok" 
+    #     page.update()  
 
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
     lv.auto_scroll = True    
@@ -165,6 +176,8 @@ def main(page: ft.Page):
     dlg = ft.AlertDialog(
         title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
     )
+
+   
 
     dataTable = ft.DataTable(
         columns=[
@@ -313,10 +326,17 @@ def main(page: ft.Page):
         reiniciar()
         page.update()
   
+    def restaurar(e):
+        # radio selecione
+        print(radioGroup.value)
+        page.update()
+
     page.add(dataTable)    
     page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
     page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))
     page.add(lv)
+    page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
+
     lista_shapes()
     # recuperar chave salva
     # print(page.client_storage.get("*"))
