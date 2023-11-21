@@ -160,26 +160,27 @@ def main(page: ft.Page):
 
 
     def salvar(e):
-        print("chamou o salvar")
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-        global violao
-        print(dt_string)
-        print(violao)
-        # salvando
+        global violao       
         conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
-        cur.execute("SELECT * FROM shapes")
-        shape = cur.fetchone()
-        print(shape)
+        sql = "INSERT INTO shapes (nome) values (?) RETURNING id;"
+        cur.execute(sql, [dt_string])      
+        id = cur.fetchone()[0]
+        conn.commit()          
+        i = 1        
+        for botao in violao:
+            if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
+                sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
+                cur.execute(sql, [i, botao[0], True if botao[2] == ft.colors.RED else False, id])         
+                conn.commit()                     
+            i = i + 1
         cur.close()
         conn.close()
-
-        # page.client_storage.set(dt_string, violao)
-        reiniciar()
-        open_dlg(e)     
-
-    # print(page.client_storage.get_keys("key-prefix."))
+        # reiniciar()
+        open_dlg(e)    
+        
     page.add(
         ft.DataTable(
             columns=[
