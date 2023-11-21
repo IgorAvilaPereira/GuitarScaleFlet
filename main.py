@@ -1,47 +1,50 @@
 import flet as ft
+from datetime import datetime
 
-def main(page: ft.Page):
+# dedo, corLetra, corFundo
+violao = [
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None],
+    ["--", ft.colors.BLUE, None]
+]
 
-    # dedo, corLetra, corFundo
-    violao = [
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None],
-        [None, None,  None]
-    ]
+def main(page: ft.Page):  
 
-    # def open_dlg_modal(e):
-    #     page.dialog = dlg_modal
-    #     dlg_modal.open = True
-    #     e.control.text = "1"
-    #     e.control.update()
-    #     page.update()
+    dlg = ft.AlertDialog(
+        title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
+    )
+
+    def open_dlg(e):
+        page.dialog = dlg
+        dlg.open = True
+        page.update()
 
     # def close_dlg(e):
     #     dlg_modal.open = False
@@ -64,22 +67,7 @@ def main(page: ft.Page):
     #     actions_alignment=ft.MainAxisAlignment.END,
     #     on_dismiss=lambda e: print("Modal dialog dismissed!"),
 
-    # )
-
-    # strings
-    # page.client_storage.set("key", "value")
-
-    # # numbers, booleans
-    # page.client_storage.set("number.setting", 12345)
-    # page.client_storage.set("bool_setting", True)
-
-    # # lists
-    # page.client_storage.set("favorite_colors", ["read", "green", "blue"])
-
-    def salvar(e):
-        print("chamou o salvar")
-        # dlg_modal.open = False
-        # page.update()
+    # )    
 
     def button_clicked(e):               
         if (e.control.text == "--" and e.control.bgcolor is None):
@@ -117,11 +105,61 @@ def main(page: ft.Page):
         
         # sabendo o botao que foi clicado
         # print(e.control.data)
-
+        global violao
+        # print(violao)
         violao[int(e.control.data)] = [e.control.text, e.control.color, e.control.bgcolor]    
-        print(violao[int(e.control.data)])    
-        
+        print(violao[int(e.control.data)])            
         e.control.update()
+
+    # strings
+    # page.client_storage.set("key", "value")
+
+    # # numbers, booleans
+    # page.client_storage.set("number.setting", 12345)
+    # page.client_storage.set("bool_setting", True)
+
+    # # lists
+    # page.client_storage.set("favorite_colors", ["read", "green", "blue"])
+    def salvar(e):
+        print("chamou o salvar")
+        now = datetime.now()
+        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+        global violao
+        print(violao)
+        page.client_storage.set(dt_string, violao)
+        violao = [
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None],
+            ["--", ft.colors.BLUE, None]
+        ]
+        open_dlg(e)     
 
     page.add(
         ft.DataTable(
