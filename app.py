@@ -32,6 +32,16 @@ def main(page: ft.Page):
 
     # )
 
+    # strings
+    # page.client_storage.set("key", "value")
+
+    # # numbers, booleans
+    # page.client_storage.set("number.setting", 12345)
+    # page.client_storage.set("bool_setting", True)
+
+    # # lists
+    # page.client_storage.set("favorite_colors", ["read", "green", "blue"])
+
 
     def button_clicked(e):
         if (e.control.text == "--" and e.control.bgcolor is None):
@@ -65,17 +75,8 @@ def main(page: ft.Page):
         elif (e.control.text == "4" and e.control.bgcolor is ft.colors.RED):
             e.control.text = "--"        
             e.control.color=ft.colors.BLUE
-            e.control.bgcolor=None            
-        
-        # elif (e.control.text == "2"):
-        #     e.control.text = "3"
-        # elif (e.control.text == "3"):
-        #     e.control.text = "4"
-        # elif (e.control.text == "4"):
-        #     e.control.text = "--"
+            e.control.bgcolor=None
         e.control.update()
-
-
 
     page.add(
         ft.DataTable(
