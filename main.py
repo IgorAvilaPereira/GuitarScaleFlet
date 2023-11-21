@@ -166,11 +166,11 @@ def main(page: ft.Page):
     page.add(
         ft.DataTable(
             columns=[
-                ft.DataColumn(ft.Text("1")),
-                ft.DataColumn(ft.Text("2")),
-                ft.DataColumn(ft.Text("3")),
-                ft.DataColumn(ft.Text("4")),
-                ft.DataColumn(ft.Text("5"))
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text(""))
             ],
             rows=[
                 ft.DataRow(
@@ -245,4 +245,9 @@ def main(page: ft.Page):
 # para rodar como desktop
 # python main.py
 
-ft.app(target=main)
+# destop
+# ft.app(target=main )
+
+# web
+ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+
