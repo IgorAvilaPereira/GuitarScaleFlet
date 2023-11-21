@@ -35,7 +35,8 @@ violao = [
     ["--", ft.colors.BLUE, None]
 ]
 
-def main(page: ft.Page):  
+
+def main(page: ft.Page):   
 
     dlg = ft.AlertDialog(
         title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
@@ -120,15 +121,8 @@ def main(page: ft.Page):
 
     # # lists
     # page.client_storage.set("favorite_colors", ["read", "green", "blue"])
-    def salvar(e):
-        print("chamou o salvar")
-        now = datetime.now()
-        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+    def reiniciar():
         global violao
-        print(dt_string)
-        print(violao)
-        # salvando
-        page.client_storage.set(dt_string, violao)
         violao = [
             ["--", ft.colors.BLUE, None],
             ["--", ft.colors.BLUE, None],
@@ -161,6 +155,18 @@ def main(page: ft.Page):
             ["--", ft.colors.BLUE, None],
             ["--", ft.colors.BLUE, None]
         ]
+
+
+    def salvar(e):
+        print("chamou o salvar")
+        now = datetime.now()
+        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+        global violao
+        print(dt_string)
+        print(violao)
+        # salvando
+        page.client_storage.set(dt_string, violao)
+        reiniciar()
         open_dlg(e)     
 
     page.add(
@@ -228,7 +234,7 @@ def main(page: ft.Page):
                 )
                 
             ],
-        ),
+        )
     )
 
     page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
