@@ -42,11 +42,8 @@ def main(page: ft.Page):
     # # lists
     # page.client_storage.set("favorite_colors", ["read", "green", "blue"])
 
-
-# https://flet.dev/docs/guides/python/testing-on-android/
-# https://flet.dev/docs/cli/run/
-
     def button_clicked(e):
+        # print(e.control.content)
         if (e.control.text == "--" and e.control.bgcolor is None):
             e.control.text = "1"        
             e.control.color=ft.colors.WHITE
@@ -149,5 +146,13 @@ def main(page: ft.Page):
         ),
     )
 
+# https://flet.dev/docs/guides/python/testing-on-android/
+# https://flet.dev/docs/cli/run/
 
+# para rodar como app
+#  pip install flet --upgrade
+# flet run main.py --android
+
+# para rodar como desktop
+# python main.py
 ft.app(target=main)
