@@ -167,10 +167,11 @@ def main(page: ft.Page):
         print(dt_string)
         print(violao)
         # salvando
-        conn = sqlite3.connect("/assets/database.db")
+        conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
         cur.execute("SELECT * FROM shapes")
         shape = cur.fetchone()
+        print(shape)
         cur.close()
         conn.close()
 
