@@ -167,7 +167,14 @@ def main(page: ft.Page):
         print(dt_string)
         print(violao)
         # salvando
-        page.client_storage.set(dt_string, violao)
+        conn = sqlite3.connect("/assets/database.db")
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM shapes")
+        shape = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        # page.client_storage.set(dt_string, violao)
         reiniciar()
         open_dlg(e)     
 
