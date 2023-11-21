@@ -142,9 +142,26 @@ def main(page: ft.Page):
             i = i + 1
         cur.close()
         conn.close()
-        # reiniciar()
+        limpar(e)
+        # lv.append(str(id)+"-"+dt_string)
         open_dlg(e)    
 
+    def lista_shapes():
+        # lv.controls.
+        conn = sqlite3.connect("./assets/database.db")
+        cur = conn.cursor()
+        cur.execute("SELECT * from shapes order by id;")
+        for shape in cur.fetchall():
+            lv.controls.append(ft.Text(str(shape[0])+"-"+shape[1]))
+        cur.close()
+        conn.close()
+        page.update()
+
+ 
+
+    lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+    lv.auto_scroll = True
+    
 
     dlg = ft.AlertDialog(
         title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
@@ -300,6 +317,8 @@ def main(page: ft.Page):
     page.add(dataTable)    
     page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
     page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))
+    page.add(lv)
+    lista_shapes()
     # recuperar chave salva
     # print(page.client_storage.get("*"))
 
