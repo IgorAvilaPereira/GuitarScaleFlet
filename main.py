@@ -106,7 +106,7 @@ def main(page: ft.Page):
         # sabendo o botao que foi clicado
         # print(e.control.data)
         global violao
-        # print(violao)
+        print(violao)
         violao[int(e.control.data)] = [e.control.text, e.control.color, e.control.bgcolor]    
         print(violao[int(e.control.data)])            
         e.control.update()
@@ -246,8 +246,8 @@ def main(page: ft.Page):
 # python main.py
 
 # destop
-# ft.app(target=main )
+ft.app(target=main)
 
 # web
-ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+# ft.app(target=main, view=ft.AppView.WEB_BROWSER)
 
