@@ -125,7 +125,9 @@ def main(page: ft.Page):
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
         global violao
+        print(dt_string)
         print(violao)
+        # salvando
         page.client_storage.set(dt_string, violao)
         violao = [
             ["--", ft.colors.BLUE, None],
@@ -230,6 +232,8 @@ def main(page: ft.Page):
     )
 
     page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
+    # recuperar chave salva
+    print(page.client_storage.get("20_11_2023_22_44_32"))
 
 # https://flet.dev/docs/guides/python/testing-on-android/
 # https://flet.dev/docs/cli/run/
@@ -240,4 +244,5 @@ def main(page: ft.Page):
 
 # para rodar como desktop
 # python main.py
+
 ft.app(target=main)
