@@ -277,7 +277,7 @@ def main(page: ft.Page):
         reiniciar()
         page.update()
 
-    # melhorar
+    # bug => 22/11
     def editar(e):
         deletar(e)
         salvar(e)
