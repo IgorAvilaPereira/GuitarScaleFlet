@@ -19,6 +19,13 @@ def main(page: ft.Page):
         dlg.open = True
         page.update()
 
+    def open_dlg_editar(e):       
+        page.dialog = dlg
+        dlg.title = ft.Text("Shape Editado")
+        dlg.open = True
+        page.update()
+    
+
     def button_clicked(e):               
         if (e.control.text == "--" and e.control.bgcolor is None):
             e.control.text = "1"        
@@ -78,11 +85,11 @@ def main(page: ft.Page):
         cur.execute(sql, [dt_string])      
         id = cur.fetchone()[0]
         conn.commit()          
-        i = 1        
+        i = 1
         for botao in violao:
             if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
                 sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
-                cur.execute(sql, [i, botao[0], True if botao[2] == ft.colors.RED else False, id])         
+                cur.execute(sql, [str(i-1), botao[0], True if botao[2] == ft.colors.RED else False, id])         
                 conn.commit()                     
             i = i + 1
         cur.close()
@@ -113,7 +120,7 @@ def main(page: ft.Page):
     lv.auto_scroll = True    
 
     dlg = ft.AlertDialog(
-        title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
+        title=ft.Text("Shape salvo!")
     )   
 
     dataTable = ft.DataTable(
@@ -277,10 +284,24 @@ def main(page: ft.Page):
         reiniciar()
         page.update()
 
-    # bug => 22/11
+    # bug
     def editar(e):
-        deletar(e)
-        salvar(e)
+        id = int(radioGroup.value)
+        conn = sqlite3.connect("./assets/database.db")
+        cur = conn.cursor()
+        sql = "DELETE FROM notas where shape_id = ?"
+        cur.execute(sql, [id]) 
+        conn.commit()           
+        i = 1        
+        for botao in violao:
+            if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
+                sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
+                cur.execute(sql, [str(i-1), botao[0], True if botao[2] == ft.colors.RED else False, id])         
+                conn.commit()                     
+            i = i + 1
+        cur.close()
+        conn.close()
+        open_dlg_editar(e)  
 
     def deletar(e):        
         id = int(radioGroup.value)
@@ -319,23 +340,26 @@ def main(page: ft.Page):
         auxNota = 0
 
         if (len(vetNota) > 0):
+            reiniciar()
             dataTable.rows = []        
             i = 1
             aux = 1
             cells=[]        
             while i <= NRO_BOTOES:            
-                if (aux >= 1 and aux <= NRO_BOTOES/6):                          
-                    # if (auxNota < len(vetNota)):
+                if (aux >= 1 and aux <= NRO_BOTOES/6):                                              
                     if (auxNota < len(vetNota) and str(i) == vetNota[auxNota][1]):
                         # eh tonica
                         if (vetNota[auxNota][2]):
                             cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.RED, color=ft.colors.WHITE)))
+                            violao[i-1]=[str(vetNota[auxNota][4]), ft.colors.RED, ft.colors.WHITE]
                         else:
                             cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.BLACK, color=ft.colors.WHITE)))
+                            violao[i-1] = [str(vetNota[auxNota][4]), ft.colors.BLACK, ft.colors.WHITE]
                         auxNota = auxNota + 1
                     else:
                         cells.append(ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i))))
-                    
+                        violao[i-1] = ["--", ft.colors.BLUE, None]
+                                            
                     if (aux == NRO_BOTOES/6):
                         row = ft.DataRow(cells = cells)
                         dataTable.rows.append(row)
