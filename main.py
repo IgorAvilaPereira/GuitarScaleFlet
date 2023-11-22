@@ -96,8 +96,6 @@ def main(page: ft.Page):
 
     def lista_shapes():
         lv.controls = []
-        # global lv
-        # lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
         cur.execute("SELECT * from shapes order by id;")        
@@ -111,19 +109,12 @@ def main(page: ft.Page):
         conn.close()
         page.update()
     
-    # def checkbox_changed(e):
-    #     print("oi")
-    #     # e.control.value = "ok" 
-    #     page.update()  
-
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
     lv.auto_scroll = True    
 
     dlg = ft.AlertDialog(
         title=ft.Text("Escala Salva!"), on_dismiss=lambda e: print("Dialog dismissed!")
-    )
-
-   
+    )   
 
     dataTable = ft.DataTable(
         columns=[
@@ -286,6 +277,11 @@ def main(page: ft.Page):
         reiniciar()
         page.update()
 
+    # melhorar
+    def editar(e):
+        deletar(e)
+        salvar(e)
+
     def deletar(e):        
         id = int(radioGroup.value)
         conn = sqlite3.connect("./assets/database.db")
@@ -376,6 +372,7 @@ def main(page: ft.Page):
     page.add(lv)
     page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
     page.add(ft.ElevatedButton(text="Deletar", on_click=deletar))
+    page.add(ft.ElevatedButton(text="Editar", on_click=editar))
 
     lista_shapes()
     # recuperar chave salva
