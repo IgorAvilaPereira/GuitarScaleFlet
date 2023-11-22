@@ -2,40 +2,13 @@ import flet as ft
 from datetime import datetime
 import sqlite3
 
-
+NRO_BOTOES = 42
 # dedo, corLetra, corFundo
-violao = [
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None],
-    ["--", ft.colors.BLUE, None]
-]
+violao = []
+i = 1
+while (i <= NRO_BOTOES):
+    violao.append(["--", ft.colors.BLUE, None])
+    i = i + 1
 
 def main(page: ft.Page):   
     page.title = "GuitarScaleFlet"
@@ -89,38 +62,11 @@ def main(page: ft.Page):
 
     def reiniciar():
         global violao
-        violao = [
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None],
-            ["--", ft.colors.BLUE, None]
-        ]  
+        violao = []
+        i = 1
+        while (i <= NRO_BOTOES):
+            violao.append(["--", ft.colors.BLUE, None])
+            i = i + 1
 
     def salvar(e):
         now = datetime.now()
@@ -186,6 +132,7 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text(""))
         ],
         rows=[
@@ -196,57 +143,63 @@ def main(page: ft.Page):
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="3")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="4")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="5")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="6"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="6")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="7"))
                 ],
             ),
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="7")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="8")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="9")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="10")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="11")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="12"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="12")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="13")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="14"))
                 ],
             ),
             ft.DataRow(
                 cells=[
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="13")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="14")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="15")),
+                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="15")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="16")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="17")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="18"))          
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="18")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="19")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="20")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="21"))
                                     ],
             ),
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="19")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="20")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="21")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="22")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="23")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="24"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="24")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="25")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="26")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="27")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="28"))
                 ],
             ),
                 ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="25")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="26")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="27")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="28")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="29")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="30"))
-                ],
-            ),
-            ft.DataRow(
-                cells=[
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="30")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="31")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="32")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="33")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="34")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="35")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="36"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="35"))
+                ],
+            ),
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="36")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="37")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="38")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="39")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="40")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="41")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="42"))
                 ],
             )                
         ]
@@ -254,6 +207,7 @@ def main(page: ft.Page):
 
     def limpar(e):
         dataTable.columns=[
+            ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
@@ -269,61 +223,82 @@ def main(page: ft.Page):
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="3")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="4")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="5")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="6"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="6")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="7"))
                 ],
             ),
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="7")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="8")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="9")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="10")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="11")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="12"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="12")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="13")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="14"))
                 ],
             ),
             ft.DataRow(
                 cells=[
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="13")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="14")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="15")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="16")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="17")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="18"))          
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="18")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="19")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="20")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="21"))
                                     ],
             ),
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="19")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="20")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="21")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="22")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="23")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="24"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="24")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="25")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="26")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="27")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="28"))
                 ],
             ),
                 ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="25")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="26")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="27")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="28")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="29")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="30"))
-                ],
-            ),
-            ft.DataRow(
-                cells=[
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="30")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="31")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="32")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="33")),
                     ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="34")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="35")),
-                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="36"))
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="35"))
+                ],
+            ),
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="36")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="37")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="38")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="39")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="40")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="41")),
+                    ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="42"))
                 ],
             )                
         ]
         reiniciar()
+        page.update()
+
+    def deletar(e):        
+        id = int(radioGroup.value)
+        conn = sqlite3.connect("./assets/database.db")
+        cur = conn.cursor()
+        sql = "DELETE FROM notas where shape_id = ?"
+        cur.execute(sql, [id]) 
+        conn.commit()   
+        sql = "DELETE FROM shapes where id = ?"
+        cur.execute(sql, [id]) 
+        conn.commit()   
+        limpar(e)
+        reiniciar()
+        lista_shapes()
         page.update()
   
     def restaurar(e):
@@ -338,21 +313,59 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
+            ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text(""))
-        ],
-        # sql = "SELECT * FROM notas where shape_id = ? and botao in ('1','2,'3,')";
-        # cur.execute(sql, [id]) 
-        # bug => arrumar
-        dataTable.rows.append(ft.DataRow(
-            cells=[
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="1")),
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="2")),
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="3")),
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="4")),
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="5")),
-                ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="6"))
-            ],
-        ))
+        ]        
+
+        sql = "SELECT * FROM notas where shape_id = ? order by id";
+        cur.execute(sql, [id]) 
+        vetNota = cur.fetchall()
+        auxNota = 0
+
+        if (len(vetNota) > 0):
+            dataTable.rows = []        
+            i = 1
+            aux = 1
+            cells=[]        
+            while i <= NRO_BOTOES:            
+                if (aux >= 1 and aux <= NRO_BOTOES/6):                          
+                    # if (auxNota < len(vetNota)):
+                    if (auxNota < len(vetNota) and str(i) == vetNota[auxNota][1]):
+                        # eh tonica
+                        if (vetNota[auxNota][2]):
+                            cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.RED, color=ft.colors.WHITE)))
+                        else:
+                            cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.BLACK, color=ft.colors.WHITE)))
+                        auxNota = auxNota + 1
+                    else:
+                        cells.append(ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i))))
+                    
+                    if (aux == NRO_BOTOES/6):
+                        row = ft.DataRow(cells = cells)
+                        dataTable.rows.append(row)
+                        cells=[]    
+                        aux = 1
+                    else:
+                        aux = aux + 1
+
+                i = i + 1 
+            
+            # dataTable.rows = []        
+            # i = 1
+            # aux = 1
+            # cells=[]        
+            # while i <= 36:            
+            #     if (aux >= 1 and aux <= 6):                
+            #         cells.append(ft.DataCell(ft.ElevatedButton(text=str(i), style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="1")))
+            #         if (aux == 6):
+            #             row = ft.DataRow(cells = cells)
+            #             dataTable.rows.append(row)
+            #             cells=[]    
+            #             aux = 1
+            #         else:
+            #             aux = aux + 1
+            # i = i + 1         
+        
         cur.close()
         conn.close()
         page.update()
@@ -362,6 +375,7 @@ def main(page: ft.Page):
     page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))
     page.add(lv)
     page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
+    page.add(ft.ElevatedButton(text="Deletar", on_click=deletar))
 
     lista_shapes()
     # recuperar chave salva
