@@ -292,11 +292,12 @@ def main(page: ft.Page):
         sql = "DELETE FROM notas where shape_id = ?"
         cur.execute(sql, [id]) 
         conn.commit()           
-        i = 1        
-        for botao in violao:
+        i = 0   
+        while (i < NRO_BOTOES):
+            botao = violao[i]
             if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
                 sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
-                cur.execute(sql, [str(i-1), botao[0], True if botao[2] == ft.colors.RED else False, id])         
+                cur.execute(sql, [str(i+1), botao[0], True if botao[2] == ft.colors.RED else False, id])         
                 conn.commit()                     
             i = i + 1
         cur.close()
