@@ -118,7 +118,7 @@ def main(page: ft.Page):
         global violao     
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")          
-        conn = sqlite3.connect("./assets/database.db")
+        conn = sqlite3.connect("database.db")
         cur = conn.cursor()
         sql = "INSERT INTO shapes (nome) values (?) RETURNING id;"
         cur.execute(sql, [dt_string])      
@@ -143,7 +143,7 @@ def main(page: ft.Page):
 
     def lista_shapes():
         lv.controls = []
-        conn = sqlite3.connect("./assets/database.db")
+        conn = sqlite3.connect("database.db")
         cur = conn.cursor()
         cur.execute("SELECT * from shapes order by id;")        
         vetShape = []
@@ -330,7 +330,7 @@ def main(page: ft.Page):
         global violao     
         try:
             id = int(radioGroup.value)
-            conn = sqlite3.connect("./assets/database.db")
+            conn = sqlite3.connect("database.db")
             cur = conn.cursor()
             sql = "DELETE FROM notas where shape_id = ?"
             cur.execute(sql, [id]) 
@@ -352,7 +352,7 @@ def main(page: ft.Page):
     def deletar(e):    
         try:    
             id = int(radioGroup.value)
-            conn = sqlite3.connect("./assets/database.db")
+            conn = sqlite3.connect("database.db")
             cur = conn.cursor()
             sql = "DELETE FROM notas where shape_id = ?"
             cur.execute(sql, [id]) 
@@ -372,7 +372,7 @@ def main(page: ft.Page):
         try:
             # radio selecione
             id = int(radioGroup.value)
-            conn = sqlite3.connect("./assets/database.db")
+            conn = sqlite3.connect("database.db")
             cur = conn.cursor()
             
             dataTable.columns=[
@@ -434,7 +434,7 @@ def main(page: ft.Page):
             restaurar(e)    
             # print(violao)
             salvar(e)     
-            # conn = sqlite3.connect("./assets/database.db")
+            # conn = sqlite3.connect("database.db")
             # cur = conn.cursor()
             # sql = "DELETE FROM notas where shape_id = ?"
             # cur.execute(sql, [id]) 
@@ -597,6 +597,12 @@ def main(page: ft.Page):
     # recuperar chave salva
     # print(page.client_storage.get("*"))
 
+# https://flet.dev/docs/guides/python/packaging-desktop-app/#customizing-windows-executable-metadata
+# Linux
+# flet pack main.py --add-data "assets:assets"
+# Windows
+# flet pack main.py --add-data "assets;assets"
+
 # https://flet.dev/docs/guides/python/testing-on-android/
 # https://flet.dev/docs/cli/run/
 
@@ -608,7 +614,7 @@ def main(page: ft.Page):
 # python main.py
 
 # destop
-ft.app(target=main)
+ft.app(target=main, assets_dir="assets")
 
 # web
 # autoreload
