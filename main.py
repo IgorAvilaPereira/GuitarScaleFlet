@@ -19,14 +19,44 @@ def main(page: ft.Page):
         dlg.open = True
         page.update()
 
+    def open_dlg_salvar(e):       
+        page.dialog = dlg
+        dlg.title = ft.Text("Novo Shape Criado")
+        dlg.open = True
+        page.update()
+
     def open_dlg_editar(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Shape Editado")
         dlg.open = True
         page.update()
-    
 
-    def button_clicked(e):               
+    def open_dlg_restaurar_erro(e):       
+        page.dialog = dlg
+        dlg.title = ft.Text("Selecione algum shape para ser duplicado")
+        dlg.open = True
+        page.update()
+    
+    def open_dlg_duplicar_erro(e):       
+        page.dialog = dlg
+        dlg.title = ft.Text("Selecione algum shape para ser duplicado")
+        dlg.open = True
+        page.update()
+
+    def open_dlg_deletar_erro(e):
+        page.dialog = dlg
+        dlg.title = ft.Text("Selecione algum shape para ser deletado")
+        dlg.open = True
+        page.update()  
+    
+    def open_dlg_duplicar_acerto(e):       
+        page.dialog = dlg
+        dlg.title = ft.Text("Duplicação realizada com sucesso!")
+        dlg.open = True
+        page.update()
+
+    def button_clicked(e):   
+        global violao            
         if (e.control.text == "--" and e.control.bgcolor is None):
             e.control.text = "1"        
             e.control.color=ft.colors.WHITE
@@ -61,10 +91,13 @@ def main(page: ft.Page):
             e.control.bgcolor=None        
         # sabendo o botao que foi clicado
         # print(e.control.data)
-        global violao
+    
         # print(violao)
-        violao[int(e.control.data)-2] = [e.control.text, e.control.color, e.control.bgcolor]    
-        # print(violao[int(e.control.data)])            
+        # violao[int(e.control.data)-2] = [e.control.text, e.control.color, e.control.bgcolor]    
+        
+        # dedo, fundo, letra
+        violao[int(e.control.data)-2] = [e.control.text, e.control.bgcolor, e.control.color]    
+        print(violao[int(e.control.data)-2])            
         e.control.update()
 
     def reiniciar():
@@ -76,9 +109,9 @@ def main(page: ft.Page):
             i = i + 1
 
     def salvar(e):
+        global violao     
         now = datetime.now()
-        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-        global violao       
+        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")          
         conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
         sql = "INSERT INTO shapes (nome) values (?) RETURNING id;"
@@ -89,7 +122,8 @@ def main(page: ft.Page):
         for botao in violao:
             if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
                 sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
-                cur.execute(sql, [str(i), botao[0], True if botao[2] == ft.colors.RED else False, id])         
+                # print(True if botao[1] == ft.colors.RED else False)
+                cur.execute(sql, [str(i), botao[0], True if botao[1] == ft.colors.RED else False, id])         
                 conn.commit()                     
             i = i + 1
         cur.close()
@@ -97,7 +131,7 @@ def main(page: ft.Page):
         limpar(e)
         # lv.append(str(id)+"-"+dt_string)       
         lista_shapes()
-        open_dlg(e)  
+        open_dlg_salvar(e)  
 
     radioGroup = ft.RadioGroup()
 
@@ -287,6 +321,7 @@ def main(page: ft.Page):
         page.update()
 
     def editar(e):
+        global violao     
         id = int(radioGroup.value)
         conn = sqlite3.connect("./assets/database.db")
         cur = conn.cursor()
@@ -298,99 +333,117 @@ def main(page: ft.Page):
             botao = violao[i]
             if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
                 sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
-                cur.execute(sql, [str(i+2), botao[0], True if botao[2] == ft.colors.RED else False, id])         
+                cur.execute(sql, [str(i+2), botao[0], True if botao[1] == ft.colors.RED else False, id])         
                 conn.commit()                     
             i = i + 1
         cur.close()
         conn.close()
         open_dlg_editar(e)  
 
-    def deletar(e):        
-        id = int(radioGroup.value)
-        conn = sqlite3.connect("./assets/database.db")
-        cur = conn.cursor()
-        sql = "DELETE FROM notas where shape_id = ?"
-        cur.execute(sql, [id]) 
-        conn.commit()   
-        sql = "DELETE FROM shapes where id = ?"
-        cur.execute(sql, [id]) 
-        conn.commit()   
-        limpar(e)
-        reiniciar()
-        lista_shapes()
-        page.update()
+    def deletar(e):    
+        try:    
+            id = int(radioGroup.value)
+            conn = sqlite3.connect("./assets/database.db")
+            cur = conn.cursor()
+            sql = "DELETE FROM notas where shape_id = ?"
+            cur.execute(sql, [id]) 
+            conn.commit()   
+            sql = "DELETE FROM shapes where id = ?"
+            cur.execute(sql, [id]) 
+            conn.commit()   
+            limpar(e)
+            reiniciar()
+            lista_shapes()
+            page.update()
+        except:
+            open_dlg_deletar_erro(e)  
   
     def restaurar(e):
-        # radio selecione
-        id = int(radioGroup.value)
-        conn = sqlite3.connect("./assets/database.db")
-        cur = conn.cursor()
-           
-        dataTable.columns=[
-            ft.DataColumn(ft.Text("")),
-            ft.DataColumn(ft.Text("")),
-            ft.DataColumn(ft.Text("")),
-            ft.DataColumn(ft.Text("")),
-            ft.DataColumn(ft.Text("")),
-            ft.DataColumn(ft.Text("")),
-            ft.DataColumn(ft.Text(""))
-        ]        
-
-        sql = "SELECT * FROM notas where shape_id = ? order by id";
-        cur.execute(sql, [id]) 
-        vetNota = cur.fetchall()
-        auxNota = 0
-
-        if (len(vetNota) > 0):
-            reiniciar()
-            dataTable.rows = []        
-            i = 2
-            aux = 1
-            cells=[]        
-            while i <= NRO_BOTOES+1:            
-                if (aux >= 1 and aux <= NRO_BOTOES/6):                                              
-                    if (auxNota < len(vetNota) and str(i) == vetNota[auxNota][1]):
-                        # eh tonica
-                        if (vetNota[auxNota][2]):
-                            cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.RED, color=ft.colors.WHITE)))
-                            violao[i-2]=[str(vetNota[auxNota][4]), ft.colors.RED, ft.colors.WHITE]
-                        else:
-                            cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.BLACK, color=ft.colors.WHITE)))
-                            violao[i-2] = [str(vetNota[auxNota][4]), ft.colors.BLACK, ft.colors.WHITE]
-                        auxNota = auxNota + 1
-                    else:
-                        cells.append(ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i))))
-                        violao[i-2] = ["--", ft.colors.BLUE, None]
-                                            
-                    if (aux == NRO_BOTOES/6):
-                        row = ft.DataRow(cells = cells)
-                        dataTable.rows.append(row)
-                        cells=[]    
-                        aux = 1
-                    else:
-                        aux = aux + 1
-
-                i = i + 1 
+        global violao     
+        try:
+            # radio selecione
+            id = int(radioGroup.value)
+            conn = sqlite3.connect("./assets/database.db")
+            cur = conn.cursor()
             
-            # dataTable.rows = []        
-            # i = 1
-            # aux = 1
-            # cells=[]        
-            # while i <= 36:            
-            #     if (aux >= 1 and aux <= 6):                
-            #         cells.append(ft.DataCell(ft.ElevatedButton(text=str(i), style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data="1")))
-            #         if (aux == 6):
-            #             row = ft.DataRow(cells = cells)
-            #             dataTable.rows.append(row)
-            #             cells=[]    
-            #             aux = 1
-            #         else:
-            #             aux = aux + 1
-            # i = i + 1         
-        
-        cur.close()
-        conn.close()
-        page.update()
+            dataTable.columns=[
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text("")),
+                ft.DataColumn(ft.Text(""))
+            ]        
+
+            sql = "SELECT * FROM notas where shape_id = ? order by id";
+            cur.execute(sql, [id]) 
+            vetNota = cur.fetchall()
+            auxNota = 0
+
+            if (len(vetNota) > 0):
+                reiniciar()
+                dataTable.rows = []        
+                i = 2
+                aux = 1
+                cells=[]        
+                while i <= NRO_BOTOES+1:            
+                    if (aux >= 1 and aux <= NRO_BOTOES/6):                                              
+                        if (auxNota < len(vetNota) and str(i) == vetNota[auxNota][1]):
+                            # eh tonica
+                            if (vetNota[auxNota][2]):
+                                cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.RED, color=ft.colors.WHITE)))
+                                violao[i-2]=[str(vetNota[auxNota][4]), ft.colors.RED, ft.colors.WHITE]
+                            else:
+                                cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.BLACK, color=ft.colors.WHITE)))
+                                violao[i-2] = [str(vetNota[auxNota][4]), ft.colors.BLACK, ft.colors.WHITE]
+                            auxNota = auxNota + 1
+                        else:
+                            cells.append(ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i))))
+                            violao[i-2] = ["--", ft.colors.BLUE, None]
+                                                
+                        if (aux == NRO_BOTOES/6):
+                            row = ft.DataRow(cells = cells)
+                            dataTable.rows.append(row)
+                            cells=[]    
+                            aux = 1
+                        else:
+                            aux = aux + 1
+
+                    i = i + 1             
+            cur.close()
+            conn.close()
+            page.update()
+        except:
+            open_dlg_restaurar_erro(e)  
+
+
+    def duplicar(e):
+        global violao     
+        try:
+            id = int(radioGroup.value)
+            restaurar(e)    
+            # print(violao)
+            salvar(e)     
+            # conn = sqlite3.connect("./assets/database.db")
+            # cur = conn.cursor()
+            # sql = "DELETE FROM notas where shape_id = ?"
+            # cur.execute(sql, [id]) 
+            # conn.commit()           
+            # i = 0  
+            # while (i < NRO_BOTOES):
+            #     botao = violao[i]
+            #     if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
+            #         sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
+            #         cur.execute(sql, [str(i+2), botao[0], True if botao[2] == ft.colors.RED else False, id])         
+            #         conn.commit()                     
+            #     i = i + 1
+            # cur.close()
+            # conn.close()
+            open_dlg_duplicar_acerto(e)  
+            # open_dlg_editar(e)  
+        except:
+            open_dlg_duplicar_erro(e)  
 
     page.add(dataTable)    
     page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
@@ -399,6 +452,7 @@ def main(page: ft.Page):
     page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
     page.add(ft.ElevatedButton(text="Deletar", on_click=deletar))
     page.add(ft.ElevatedButton(text="Editar", on_click=editar))
+    page.add(ft.ElevatedButton(text="Duplicar", on_click=duplicar))
 
     lista_shapes()
     # recuperar chave salva
