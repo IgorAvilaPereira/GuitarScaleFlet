@@ -469,12 +469,12 @@ def main(page: ft.Page):
 # python main.py
 
 # destop
-# ft.app(target=main)
+ft.app(target=main)
 
 # web
 # autoreload
 # flet run main.py --web
-ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+# ft.app(target=main, view=ft.AppView.WEB_BROWSER)
 
 # @app.route("/tela_adicionar_tags/<int:id>", methods=['GET'])
 # def tela_adicionar_tags(id):
