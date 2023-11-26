@@ -204,6 +204,8 @@ def main(page: ft.Page):
     )    
 
     def limpar(e):
+        radioGroup.value = None
+
         dataTable.columns=[
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
@@ -284,7 +286,6 @@ def main(page: ft.Page):
         reiniciar()
         page.update()
 
-    # bug
     def editar(e):
         id = int(radioGroup.value)
         conn = sqlite3.connect("./assets/database.db")
