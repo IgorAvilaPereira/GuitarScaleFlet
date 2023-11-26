@@ -157,7 +157,7 @@ def main(page: ft.Page):
         page.update()
     
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-    lv.auto_scroll = True    
+    # lv.auto_scroll = True    
 
     dlg = ft.AlertDialog(
         title=ft.Text("Shape salvo!")
@@ -457,15 +457,143 @@ def main(page: ft.Page):
     # row = ft.Row(spacing=0, con)
     # page.add(
 
-    page.add(dataTable)    
-    page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
-    page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))    
-    page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
-    page.add(ft.ElevatedButton(text="Deletar", on_click=deletar))
-    page.add(ft.ElevatedButton(text="Editar", on_click=editar))
-    page.add(ft.ElevatedButton(text="Duplicar", on_click=duplicar))
-    page.add(lv)
-    lista_shapes()
+    # items = []
+    # for i in range(1, 1 + 1):
+    #     items.append(
+    #         ft.Container(
+    #             content=dataTable,
+    #             alignment=ft.alignment.top_left,
+    #             # width=50,
+    #             # height=50,
+    #             # bgcolor=ft.colors.AMBER,
+    #             # border_radius=ft.border_radius.all(5),
+    #         )
+    #     )
+    #     items.append(
+    #         ft.Container(
+    #             content=lv,
+    #             alignment=ft.alignment.center,
+    #             # width=50,
+    #             # height=50,
+    #             # bgcolor=ft.colors.AMBER,  
+    #             # border_radius=ft.border_radius.all(5),
+    #         )
+    #     )
+    
+    
+    # page.add(dataTable)  
+    # page.add(lv)    
+
+    page.add(
+        ft.Row(
+            [
+                ft.Container(
+                    content=dataTable,
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    # bgcolor=ft.colors.AMBER,
+                    # width=150,
+                    # height=150,
+                    # border_radius=10,
+                ),
+                ft.Container(
+                    content=lv,
+                    # margin=10,
+                    # padding=10,
+                    alignment=ft.alignment.center,
+                    # bgcolor=ft.colors.GREEN_200,
+                    width=300,
+                    height=300,
+                    # border_radius=10,
+                    # on_click=lambda e: print("Clickable without Ink clicked!"),
+                )
+            ]))
+        
+    # row = ft.Row(spacing=0, controls=items)
+    # page.add(ft.Column(), row)    
+
+
+    lista_shapes()    
+
+    def items(count):
+        items = []
+        for i in range(1, count + 1):
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text="Salvar", on_click=salvar),
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text="Limpar", on_click=limpar),
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text="Restaurar", on_click=restaurar),
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text="Deletar", on_click=deletar),
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )
+
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text="Editar", on_click=editar),
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )
+
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text="Duplicar", on_click=duplicar),
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )         
+            
+        return items
+
+
+    row = ft.Row(spacing=0, controls=items(1))
+    page.add(ft.Column(), row)
+
+    # page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
+    # page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))    
+    # page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
+    # page.add(ft.ElevatedButton(text="Deletar", on_click=deletar))
+    # page.add(ft.ElevatedButton(text="Editar", on_click=editar))
+    # page.add(ft.ElevatedButton(text="Duplicar", on_click=duplicar))  
     # recuperar chave salva
     # print(page.client_storage.get("*"))
 
