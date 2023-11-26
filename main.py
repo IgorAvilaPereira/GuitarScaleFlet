@@ -102,7 +102,7 @@ def main(page: ft.Page):
         
         # dedo, fundo, letra
         violao[int(e.control.data)-2] = [e.control.text, e.control.bgcolor, e.control.color]    
-        print(violao[int(e.control.data)-2])            
+        # print(violao[int(e.control.data)-2])            
         e.control.update()
 
     def reiniciar():
@@ -114,13 +114,16 @@ def main(page: ft.Page):
             i = i + 1
 
     def salvar(e):
-        global violao     
+        global violao             
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")          
         conn = sqlite3.connect("database.db")
         cur = conn.cursor()
         sql = "INSERT INTO shapes (nome) values (?) RETURNING id;"
-        cur.execute(sql, [dt_string])      
+        if (len(txt_name.value) > 0):
+            cur.execute(sql, [txt_name.value])      
+        else:
+            cur.execute(sql, [dt_string])      
         id = cur.fetchone()[0]
         conn.commit()          
         i = 2
@@ -134,7 +137,6 @@ def main(page: ft.Page):
         cur.close()
         conn.close()
         limpar(e)
-        # lv.append(str(id)+"-"+dt_string)       
         lista_shapes()
         open_dlg_salvar(e)  
 
@@ -243,6 +245,7 @@ def main(page: ft.Page):
     )    
 
     def limpar(e):
+        txt_name.value = None
         radioGroup.value = None
 
         dataTable.columns=[
@@ -330,6 +333,13 @@ def main(page: ft.Page):
         try:
             id = int(radioGroup.value)
             conn = sqlite3.connect("database.db")
+
+            if (len(txt_name.value) > 0):
+                cur = conn.cursor()
+                sql = "UPDATE shapes SET nome = ? where id = ?"
+                cur.execute(sql, [txt_name.value, id]) 
+                conn.commit()      
+
             cur = conn.cursor()
             sql = "DELETE FROM notas where shape_id = ?"
             cur.execute(sql, [id]) 
@@ -345,6 +355,7 @@ def main(page: ft.Page):
             cur.close()
             conn.close()
             open_dlg_editar(e)  
+            lista_shapes()
         except:
             open_dlg_editar_erro(e)  
 
@@ -373,6 +384,11 @@ def main(page: ft.Page):
             id = int(radioGroup.value)
             conn = sqlite3.connect("database.db")
             cur = conn.cursor()
+
+            sql = "SELECT * FROM shapes where id = ?";
+            cur.execute(sql, [id]) 
+            shape = cur.fetchone()
+            txt_name.value = shape[1]
             
             dataTable.columns=[
                 ft.DataColumn(ft.Text("")),
@@ -431,6 +447,9 @@ def main(page: ft.Page):
         try:
             id = int(radioGroup.value)
             restaurar(e)    
+            now = datetime.now()
+            dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")   
+            txt_name.value = txt_name.value+"_"+dt_string
             # print(violao)
             salvar(e)     
             # conn = sqlite3.connect("database.db")
@@ -481,39 +500,12 @@ def main(page: ft.Page):
     
     
     # page.add(dataTable)  
-    # page.add(lv)    
+    # page.add(lv)  
+    # 
+      
 
-    page.add(
-        ft.Row(
-            [
-                ft.Container(
-                    content=dataTable,
-                    margin=10,
-                    padding=10,
-                    alignment=ft.alignment.center,
-                    # bgcolor=ft.colors.AMBER,
-                    # width=150,
-                    # height=150,
-                    # border_radius=10,
-                ),
-                ft.Container(
-                    content=lv,
-                    # margin=10,
-                    # padding=10,
-                    alignment=ft.alignment.center,
-                    # bgcolor=ft.colors.GREEN_200,
-                    width=300,
-                    height=300,
-                    # border_radius=10,
-                    # on_click=lambda e: print("Clickable without Ink clicked!"),
-                )
-            ]))
-        
-    # row = ft.Row(spacing=0, controls=items)
-    # page.add(ft.Column(), row)    
+    txt_name = ft.TextField(label="Nome do shape:")
 
-
-    lista_shapes()    
 
     def items(count):
         items = []
@@ -579,13 +571,61 @@ def main(page: ft.Page):
                     # bgcolor=ft.colors.AMBER,
                     # border_radius=ft.border_radius.all(5),
                 )
-            )         
+            )
+
+
+            items.append(
+                ft.Container(
+                    content=txt_name,
+                    alignment=ft.alignment.center,
+                    # width=50,
+                    # height=50,
+                    # bgcolor=ft.colors.AMBER,
+                    # border_radius=ft.border_radius.all(5),
+                )
+            )
+                 
             
         return items
 
 
     row = ft.Row(spacing=0, controls=items(1))
     page.add(ft.Column(), row)
+
+
+    page.add(
+        ft.Row(
+            [
+                ft.Container(
+                    content=dataTable,
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    # bgcolor=ft.colors.AMBER,
+                    # width=150,
+                    # height=150,
+                    # border_radius=10,
+                ),
+                ft.Container(
+                    content=lv,
+                    # margin=10,
+                    # padding=10,
+                    alignment=ft.alignment.center,
+                    # bgcolor=ft.colors.GREEN_200,
+                    width=300,
+                    height=300,
+                    # border_radius=10,
+                    # on_click=lambda e: print("Clickable without Ink clicked!"),
+                )
+            ]))
+        
+    # row = ft.Row(spacing=0, controls=items)
+    # page.add(ft.Column(), row)    
+
+
+    lista_shapes()    
+
+  
 
     # page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
     # page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))    
