@@ -1,5 +1,9 @@
 # GuitarScaleFlet
 
+## Demo
+
+![](demo.gif)
+
 ## Instalação
 
 Extraia o zip baixado através do link https://github.com/IgorAvilaPereira/GuitarScaleFlet/archive/refs/heads/main.zip
