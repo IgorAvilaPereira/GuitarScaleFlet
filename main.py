@@ -3,7 +3,6 @@ from datetime import datetime
 import sqlite3
 
 NRO_BOTOES = 42
-# dedo, corLetra, corFundo
 violao = []
 i = 1
 while (i <= NRO_BOTOES):
