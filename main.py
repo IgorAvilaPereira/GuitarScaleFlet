@@ -516,5 +516,5 @@ def main(page: ft.Page):
             ]))
   
     lista_shapes()
-# criar um executavel => flet pack main.py
+# criar um executavel => flet pack main.py (eh preciso colocar o database.db junto do executavel (dentro da pasta dist))
 ft.app(target=main, assets_dir="assets")
