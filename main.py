@@ -10,7 +10,7 @@ while (i <= NRO_BOTOES):
     i = i + 1
 
 def main(page: ft.Page):   
-    page.title = "GuitarScaleFlet"
+    page.title = "GuitarScaleFlet - Desenvolvido por Igor Avila Pereira"
     page.auto_scroll = True   
     
     def open_dlg(e):
@@ -93,16 +93,8 @@ def main(page: ft.Page):
         elif (e.control.text == "4" and e.control.bgcolor is ft.colors.RED):
             e.control.text = "--"        
             e.control.color=ft.colors.BLUE
-            e.control.bgcolor=None        
-        # sabendo o botao que foi clicado
-        # print(e.control.data)
-    
-        # print(violao)
-        # violao[int(e.control.data)-2] = [e.control.text, e.control.color, e.control.bgcolor]    
-        
-        # dedo, fundo, letra
-        violao[int(e.control.data)-2] = [e.control.text, e.control.bgcolor, e.control.color]    
-        # print(violao[int(e.control.data)-2])            
+            e.control.bgcolor=None
+        violao[int(e.control.data)-2] = [e.control.text, e.control.bgcolor, e.control.color]            
         e.control.update()
 
     def reiniciar():
@@ -130,7 +122,6 @@ def main(page: ft.Page):
         for botao in violao:
             if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
                 sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
-                # print(True if botao[1] == ft.colors.RED else False)
                 cur.execute(sql, [str(i), botao[0], True if botao[1] == ft.colors.RED else False, id])         
                 conn.commit()                     
             i = i + 1
@@ -158,7 +149,6 @@ def main(page: ft.Page):
         page.update()
     
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-    # lv.auto_scroll = True    
 
     dlg = ft.AlertDialog(
         title=ft.Text("Shape salvo!")
@@ -380,7 +370,6 @@ def main(page: ft.Page):
     def restaurar(e):
         global violao     
         try:
-            # radio selecione
             id = int(radioGroup.value)
             conn = sqlite3.connect("database.db")
             cur = conn.cursor()
@@ -440,7 +429,6 @@ def main(page: ft.Page):
             page.update()
         except:
             open_dlg_restaurar_erro(e)  
-
 
     def duplicar(e):
         global violao     
@@ -528,5 +516,5 @@ def main(page: ft.Page):
             ]))
   
     lista_shapes()
-# destop
+
 ft.app(target=main, assets_dir="assets")
