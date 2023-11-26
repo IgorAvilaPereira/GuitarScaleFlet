@@ -31,6 +31,12 @@ def main(page: ft.Page):
         dlg.open = True
         page.update()
 
+    def open_dlg_editar_erro(e):       
+        page.dialog = dlg
+        dlg.title = ft.Text("Selecione algum shape para ser editado")
+        dlg.open = True
+        page.update()
+
     def open_dlg_restaurar_erro(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Selecione algum shape para ser duplicado")
@@ -322,23 +328,26 @@ def main(page: ft.Page):
 
     def editar(e):
         global violao     
-        id = int(radioGroup.value)
-        conn = sqlite3.connect("./assets/database.db")
-        cur = conn.cursor()
-        sql = "DELETE FROM notas where shape_id = ?"
-        cur.execute(sql, [id]) 
-        conn.commit()           
-        i = 0  
-        while (i < NRO_BOTOES):
-            botao = violao[i]
-            if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
-                sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
-                cur.execute(sql, [str(i+2), botao[0], True if botao[1] == ft.colors.RED else False, id])         
-                conn.commit()                     
-            i = i + 1
-        cur.close()
-        conn.close()
-        open_dlg_editar(e)  
+        try:
+            id = int(radioGroup.value)
+            conn = sqlite3.connect("./assets/database.db")
+            cur = conn.cursor()
+            sql = "DELETE FROM notas where shape_id = ?"
+            cur.execute(sql, [id]) 
+            conn.commit()           
+            i = 0  
+            while (i < NRO_BOTOES):
+                botao = violao[i]
+                if (botao[0] == "1" or botao[0] == "2" or botao[0] == "3" or botao[0] == "4"):                                
+                    sql = "INSERT INTO notas (botao, dedo, dominante, shape_id) values (?, ?, ?, ?);";                
+                    cur.execute(sql, [str(i+2), botao[0], True if botao[1] == ft.colors.RED else False, id])         
+                    conn.commit()                     
+                i = i + 1
+            cur.close()
+            conn.close()
+            open_dlg_editar(e)  
+        except:
+            open_dlg_editar_erro(e)  
 
     def deletar(e):    
         try:    
@@ -445,15 +454,17 @@ def main(page: ft.Page):
         except:
             open_dlg_duplicar_erro(e)  
 
+    # row = ft.Row(spacing=0, con)
+    # page.add(
+
     page.add(dataTable)    
     page.add(ft.ElevatedButton(text="Salvar", on_click=salvar))
-    page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))
-    page.add(lv)
+    page.add(ft.ElevatedButton(text="Limpar", on_click=limpar))    
     page.add(ft.ElevatedButton(text="Restaurar", on_click=restaurar))
     page.add(ft.ElevatedButton(text="Deletar", on_click=deletar))
     page.add(ft.ElevatedButton(text="Editar", on_click=editar))
     page.add(ft.ElevatedButton(text="Duplicar", on_click=duplicar))
-
+    page.add(lv)
     lista_shapes()
     # recuperar chave salva
     # print(page.client_storage.get("*"))
