@@ -1,7 +1,6 @@
 import flet as ft
 from datetime import datetime
 import sqlite3
-
 # THIS FOR IMPORT COLOR TABLE BACKGROUN
 # from reportlab.lib import colors
 # # THIS FOR mm OF YOU PAGES
@@ -10,10 +9,8 @@ import sqlite3
 # from reportlab.lib.pagesizes import letter,landscape,portrait
 # # THIS FOR RESULT OF YOU TABLE AND ADD TITLE ABOVE THE TABLE
 # from reportlab.platypus import SimpleDocTemplate,Table,Paragraph
-
-#from PIL import Image
+# from PIL import Image
 # import pyscreenshot as ImageGrab
-
 NRO_BOTOES = 42
 violao = []
 i = 1
@@ -24,57 +21,48 @@ while (i <= NRO_BOTOES):
 def main(page: ft.Page):   
     page.title = "GuitarScaleFlet - Desenvolvido por Igor Avila Pereira"
     page.auto_scroll = True   
-    # page.window_width = 1000        # window's width is 200 px
-    # page.window_height = 600       # window's height is 200 px
-    # page.window_resizable = False  # window is not resizable
-    
+    # page.window_width = 1000      
+    # page.window_height = 600      
+    # page.window_resizable = False     
     def open_dlg(e):
         page.dialog = dlg
         dlg.open = True
         page.update()
-
     def open_dlg_salvar(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Novo Shape Criado")
         dlg.open = True
         page.update()
-
     def open_dlg_editar(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Shape Editado")
         dlg.open = True
         page.update()
-
     def open_dlg_editar_erro(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Selecione algum shape para ser editado")
         dlg.open = True
         page.update()
-
     def open_dlg_restaurar_erro(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Selecione algum shape para ser duplicado")
         dlg.open = True
-        page.update()
-    
+        page.update()    
     def open_dlg_duplicar_erro(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Selecione algum shape para ser duplicado")
         dlg.open = True
         page.update()
-
     def open_dlg_deletar_erro(e):
         page.dialog = dlg
         dlg.title = ft.Text("Selecione algum shape para ser deletado")
         dlg.open = True
-        page.update()  
-    
+        page.update()    
     def open_dlg_duplicar_acerto(e):       
         page.dialog = dlg
         dlg.title = ft.Text("Duplicação realizada com sucesso!")
         dlg.open = True
         page.update()
-
     def button_clicked(e):   
         global violao            
         if (e.control.text == "--" and e.control.bgcolor is None):
@@ -111,7 +99,6 @@ def main(page: ft.Page):
             e.control.bgcolor=None
         violao[int(e.control.data)-2] = [e.control.text, e.control.bgcolor, e.control.color]            
         e.control.update()
-
     def reiniciar():
         global violao
         violao = []
@@ -119,7 +106,6 @@ def main(page: ft.Page):
         while (i <= NRO_BOTOES):
             violao.append(["--", ft.colors.BLUE, None])
             i = i + 1
-
     def salvar(e):
         global violao             
         now = datetime.now()
@@ -145,9 +131,8 @@ def main(page: ft.Page):
         limpar(e)
         lista_shapes()
         open_dlg_salvar(e)  
-
+    
     radioGroup = ft.RadioGroup()
-
     def lista_shapes():
         lv.controls = []
         conn = sqlite3.connect("database.db")
@@ -161,14 +146,12 @@ def main(page: ft.Page):
             lv.controls.append(radioGroup)
         cur.close()
         conn.close()
-        page.update()
+        page.update()    
     
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-
     dlg = ft.AlertDialog(
         title=ft.Text("Shape salvo!")
     )   
-
     dataTable = ft.DataTable(
         columns=[
             ft.DataColumn(ft.Text("")),
@@ -248,11 +231,9 @@ def main(page: ft.Page):
             )                
         ]
     )    
-
     def limpar(e):
         txt_name.value = None
         radioGroup.value = None
-
         dataTable.columns=[
             ft.DataColumn(ft.Text("")),
             ft.DataColumn(ft.Text("")),
@@ -332,19 +313,16 @@ def main(page: ft.Page):
         ]
         reiniciar()
         page.update()
-
     def editar(e):
         global violao     
         try:
             id = int(radioGroup.value)
             conn = sqlite3.connect("database.db")
-
             if (len(txt_name.value) > 0):
                 cur = conn.cursor()
                 sql = "UPDATE shapes SET nome = ? where id = ?"
                 cur.execute(sql, [txt_name.value, id]) 
                 conn.commit()      
-
             cur = conn.cursor()
             sql = "DELETE FROM notas where shape_id = ?"
             cur.execute(sql, [id]) 
@@ -363,7 +341,6 @@ def main(page: ft.Page):
             lista_shapes()
         except:
             open_dlg_editar_erro(e)  
-
     def deletar(e):    
         try:    
             id = int(radioGroup.value)
@@ -380,20 +357,17 @@ def main(page: ft.Page):
             lista_shapes()
             page.update()
         except:
-            open_dlg_deletar_erro(e)  
-  
+            open_dlg_deletar_erro(e)   
     def restaurar(e):
         global violao     
         try:
             id = int(radioGroup.value)
             conn = sqlite3.connect("database.db")
             cur = conn.cursor()
-
             sql = "SELECT * FROM shapes where id = ?";
             cur.execute(sql, [id]) 
             shape = cur.fetchone()
-            txt_name.value = shape[1]
-            
+            txt_name.value = shape[1]            
             dataTable.columns=[
                 ft.DataColumn(ft.Text("")),
                 ft.DataColumn(ft.Text("")),
@@ -403,12 +377,10 @@ def main(page: ft.Page):
                 ft.DataColumn(ft.Text("")),
                 ft.DataColumn(ft.Text(""))
             ]        
-
             sql = "SELECT * FROM notas where shape_id = ? order by id";
             cur.execute(sql, [id]) 
             vetNota = cur.fetchall()
             auxNota = 0
-
             if (len(vetNota) > 0):
                 reiniciar()
                 dataTable.rows = []        
@@ -417,8 +389,7 @@ def main(page: ft.Page):
                 cells=[]        
                 while i <= NRO_BOTOES+1:            
                     if (aux >= 1 and aux <= NRO_BOTOES/6):                                              
-                        if (auxNota < len(vetNota) and str(i) == vetNota[auxNota][1]):
-                            # eh tonica
+                        if (auxNota < len(vetNota) and str(i) == vetNota[auxNota][1]):                            
                             if (vetNota[auxNota][2]):
                                 cells.append(ft.DataCell(ft.ElevatedButton(text=vetNota[auxNota][4], style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i), bgcolor=ft.colors.RED, color=ft.colors.WHITE)))
                                 violao[i-2]=[str(vetNota[auxNota][4]), ft.colors.RED, ft.colors.WHITE]
@@ -428,8 +399,7 @@ def main(page: ft.Page):
                             auxNota = auxNota + 1
                         else:
                             cells.append(ft.DataCell(ft.ElevatedButton(text="--", style=ft.ButtonStyle(shape=ft.CircleBorder(), padding=10), on_click=button_clicked, data=str(i))))
-                            violao[i-2] = ["--", ft.colors.BLUE, None]
-                                                
+                            violao[i-2] = ["--", ft.colors.BLUE, None]                                                
                         if (aux == NRO_BOTOES/6):
                             row = ft.DataRow(cells = cells)
                             dataTable.rows.append(row)
@@ -444,7 +414,6 @@ def main(page: ft.Page):
             page.update()
         except:
             open_dlg_restaurar_erro(e)  
-
     def duplicar(e):
         global violao     
         try:
@@ -456,10 +425,9 @@ def main(page: ft.Page):
             salvar(e)     
             open_dlg_duplicar_acerto(e)              
         except:
-            open_dlg_duplicar_erro(e)       
+            open_dlg_duplicar_erro(e)
 
     txt_name = ft.TextField(label="Nome do shape:")
-
     # def pick_files_result(e: ft.FilePickerResultEvent):        
     #     print("Selected files:", e.files)
     #     print("Selected file or directory:", e.path)
@@ -470,7 +438,6 @@ def main(page: ft.Page):
     #     x2 = x1+page.width
     #     y2 = y1+page.height
     #     ImageGrab.grab().save(e.path+".png")    
-
         # screen = ImageGrab.grab()      
         # screen.save(e.path+".png")            
         # sleep(2)
@@ -479,13 +446,11 @@ def main(page: ft.Page):
         # crop_image = image[y1:y1+page.height, x1:x1+page.width]
         # cv2.imshow("Cropped", crop_image)
         # cv2.waitKey(0)    
-
         # from PIL import Image
         # img = Image.open(e.path+".png")
         # img2 = img.crop((x1,y1, x1+page.width,y1+page.height))      
         # img2.save('myimage_cropped.jpg')                     
         # img2.show()
-
         # mydata = [
         #     {"name":"john","last":"smith","age":12},
         #     {"name":"john","last":"smith","age":12},
@@ -515,12 +480,11 @@ def main(page: ft.Page):
         # #     ('GRID', (0, 0), (-1, -1), 1, colors.black) 
         # # ])	 
         # doc.build([header,table])    
-
+    
     # export
     # pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
     # page.overlay.append(pick_files_dialog)
     # page.update()    
-
     def items(count):
         items = []
         for i in range(1, count + 1):
@@ -548,37 +512,32 @@ def main(page: ft.Page):
                     alignment=ft.alignment.center
                 )
             )
-
             items.append(
                 ft.Container(
                     content=ft.ElevatedButton(text="Editar", on_click=editar),
                     alignment=ft.alignment.center
                 )
             )
-
             items.append(
                 ft.Container(
                     content=ft.ElevatedButton(text="Duplicar", on_click=duplicar),
                     alignment=ft.alignment.center
                 )
             )
-
             # items.append(
             #     ft.Container(                    
             #         content=ft.ElevatedButton("Export",   on_click=lambda _: pick_files_dialog.save_file()),
             #         alignment=ft.alignment.center
             #     )
             # )
-
             items.append(
                 ft.Container(
                     content=txt_name,
                     alignment=ft.alignment.center
                 )
-            )              
-            
+            )            
         return items
-
+    
     row = ft.Row(spacing=0, controls=items(1))
     page.add(ft.Column(), row)
     page.add(
@@ -596,8 +555,7 @@ def main(page: ft.Page):
                     width=300,
                     height=300
                 )
-            ]))
-  
+            ]))  
     lista_shapes()
 # criar um executavel => flet pack main.py (eh preciso colocar o database.db junto do executavel (dentro da pasta dist))
 ft.app(target=main, assets_dir="assets")
