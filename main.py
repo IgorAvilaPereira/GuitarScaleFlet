@@ -12,7 +12,7 @@ import sqlite3
 # from reportlab.platypus import SimpleDocTemplate,Table,Paragraph
 
 #from PIL import Image
-import pyscreenshot as ImageGrab
+# import pyscreenshot as ImageGrab
 
 NRO_BOTOES = 42
 violao = []
@@ -460,19 +460,17 @@ def main(page: ft.Page):
 
     txt_name = ft.TextField(label="Nome do shape:")
 
-    def pick_files_result(e: ft.FilePickerResultEvent):        
-        print("Selected files:", e.files)
-        print("Selected file or directory:", e.path)
-        x1 = page.window_top        
-        y1 = page.window_left        
-        print(str(x1)+","+str(y1))
-        print(str(x1+page.width)+","+str(y1+page.height))                                   
-        x2 = x1+page.width
-        y2 = y1+page.height        
-        # try:
-        #     ImageGrab.grab(bbox=(x1, y1, x2, y2)).save(e.path+".png")    
-        # except:
-        ImageGrab.grab().save(e.path+".png")    
+    # def pick_files_result(e: ft.FilePickerResultEvent):        
+    #     print("Selected files:", e.files)
+    #     print("Selected file or directory:", e.path)
+    #     x1 = page.window_top        
+    #     y1 = page.window_left        
+    #     print(str(x1)+","+str(y1))
+    #     print(str(x1+page.width)+","+str(y1+page.height))                                   
+    #     x2 = x1+page.width
+    #     y2 = y1+page.height
+    #     ImageGrab.grab().save(e.path+".png")    
+
         # screen = ImageGrab.grab()      
         # screen.save(e.path+".png")            
         # sleep(2)
@@ -519,9 +517,9 @@ def main(page: ft.Page):
         # doc.build([header,table])    
 
     # export
-    pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
-    page.overlay.append(pick_files_dialog)
-    page.update()    
+    # pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
+    # page.overlay.append(pick_files_dialog)
+    # page.update()    
 
     def items(count):
         items = []
@@ -565,12 +563,12 @@ def main(page: ft.Page):
                 )
             )
 
-            items.append(
-                ft.Container(                    
-                    content=ft.ElevatedButton("Export",   on_click=lambda _: pick_files_dialog.save_file()),
-                    alignment=ft.alignment.center
-                )
-            )
+            # items.append(
+            #     ft.Container(                    
+            #         content=ft.ElevatedButton("Export",   on_click=lambda _: pick_files_dialog.save_file()),
+            #         alignment=ft.alignment.center
+            #     )
+            # )
 
             items.append(
                 ft.Container(
