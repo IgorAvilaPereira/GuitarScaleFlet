@@ -11,8 +11,8 @@ import sqlite3
 # # THIS FOR RESULT OF YOU TABLE AND ADD TITLE ABOVE THE TABLE
 # from reportlab.platypus import SimpleDocTemplate,Table,Paragraph
 
-
-# import pyscreenshot as ImageGrab
+# from PIL import Image
+import pyscreenshot as ImageGrab
 
 NRO_BOTOES = 42
 violao = []
@@ -460,19 +460,19 @@ def main(page: ft.Page):
 
     txt_name = ft.TextField(label="Nome do shape:")
 
-    # def pick_files_result(e: ft.FilePickerResultEvent):        
-    #     print("Selected files:", e.files)
-    #     print("Selected file or directory:", e.path)
-    #     x1 = page.window_top        
-    #     y1 = page.window_left        
-    #     print(str(x1)+","+str(y1))
-    #     print(str(x1+page.width)+","+str(y1+page.height))                   
-    #     import platform        
-    #     if (platform.system() == "Linux"):
-    #         screen = ImageGrab.grab()       
-    #     else:
-    #         screen = ImageGrab.grab(bbox=(x1,y1, x1+page.width, y1+page.height))
-    #     screen.save(e.path+".png")
+    def pick_files_result(e: ft.FilePickerResultEvent):        
+        print("Selected files:", e.files)
+        print("Selected file or directory:", e.path)
+        x1 = page.window_top        
+        y1 = page.window_left        
+        print(str(x1)+","+str(y1))
+        print(str(x1+page.width)+","+str(y1+page.height))                   
+        import platform        
+        if (platform.system() == "Linux"):
+            screen = ImageGrab.grab()       
+        else:
+            screen = ImageGrab.grab(bbox=(x1,y1, x1+page.width, y1+page.height))
+        screen.save(e.path+".png")
 
         # mydata = [
         #     {"name":"john","last":"smith","age":12},
@@ -505,9 +505,9 @@ def main(page: ft.Page):
         # doc.build([header,table])    
 
     # export
-    # pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
-    # page.overlay.append(pick_files_dialog)
-    # page.update()    
+    pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
+    page.overlay.append(pick_files_dialog)
+    page.update()    
 
     def items(count):
         items = []
@@ -551,14 +551,12 @@ def main(page: ft.Page):
                 )
             )
 
-            # items.append(
-            #     ft.Container(                    
-            #         content=ft.ElevatedButton("Export",   on_click=lambda _: pick_files_dialog.save_file()),
-            #         alignment=ft.alignment.center
-            #     )
-            # )
-
-
+            items.append(
+                ft.Container(                    
+                    content=ft.ElevatedButton("Export",   on_click=lambda _: pick_files_dialog.save_file()),
+                    alignment=ft.alignment.center
+                )
+            )
 
             items.append(
                 ft.Container(
