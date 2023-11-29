@@ -11,7 +11,7 @@ import sqlite3
 # # THIS FOR RESULT OF YOU TABLE AND ADD TITLE ABOVE THE TABLE
 # from reportlab.platypus import SimpleDocTemplate,Table,Paragraph
 
-# from PIL import Image
+#from PIL import Image
 import pyscreenshot as ImageGrab
 
 NRO_BOTOES = 42
@@ -466,13 +466,27 @@ def main(page: ft.Page):
         x1 = page.window_top        
         y1 = page.window_left        
         print(str(x1)+","+str(y1))
-        print(str(x1+page.width)+","+str(y1+page.height))                   
-        import platform        
-        if (platform.system() == "Linux"):
-            screen = ImageGrab.grab()       
-        else:
-            screen = ImageGrab.grab(bbox=(x1,y1, x1+page.width, y1+page.height))
-        screen.save(e.path+".png")
+        print(str(x1+page.width)+","+str(y1+page.height))                                   
+        x2 = x1+page.width
+        y2 = y1+page.height        
+        # try:
+        #     ImageGrab.grab(bbox=(x1, y1, x2, y2)).save(e.path+".png")    
+        # except:
+        ImageGrab.grab().save(e.path+".png")    
+        # screen = ImageGrab.grab()      
+        # screen.save(e.path+".png")            
+        # sleep(2)
+        # import cv2
+        # image = cv2.imread(e.path+".png")
+        # crop_image = image[y1:y1+page.height, x1:x1+page.width]
+        # cv2.imshow("Cropped", crop_image)
+        # cv2.waitKey(0)    
+
+        # from PIL import Image
+        # img = Image.open(e.path+".png")
+        # img2 = img.crop((x1,y1, x1+page.width,y1+page.height))      
+        # img2.save('myimage_cropped.jpg')                     
+        # img2.show()
 
         # mydata = [
         #     {"name":"john","last":"smith","age":12},
