@@ -2,6 +2,18 @@ import flet as ft
 from datetime import datetime
 import sqlite3
 
+# THIS FOR IMPORT COLOR TABLE BACKGROUN
+# from reportlab.lib import colors
+# # THIS FOR mm OF YOU PAGES
+# from reportlab.lib.units import mm
+# # FOR SIZE OF YOU PAGES
+# from reportlab.lib.pagesizes import letter,landscape,portrait
+# # THIS FOR RESULT OF YOU TABLE AND ADD TITLE ABOVE THE TABLE
+# from reportlab.platypus import SimpleDocTemplate,Table,Paragraph
+
+
+import pyscreenshot as ImageGrab
+
 NRO_BOTOES = 42
 violao = []
 i = 1
@@ -12,6 +24,9 @@ while (i <= NRO_BOTOES):
 def main(page: ft.Page):   
     page.title = "GuitarScaleFlet - Desenvolvido por Igor Avila Pereira"
     page.auto_scroll = True   
+    # page.window_width = 1000        # window's width is 200 px
+    # page.window_height = 600       # window's height is 200 px
+    # page.window_resizable = False  # window is not resizable
     
     def open_dlg(e):
         page.dialog = dlg
@@ -445,6 +460,56 @@ def main(page: ft.Page):
 
     txt_name = ft.TextField(label="Nome do shape:")
 
+    def pick_files_result(e: ft.FilePickerResultEvent):        
+        print("Selected files:", e.files)
+        print("Selected file or directory:", e.path)
+        x1 = page.window_top        
+        y1 = page.window_left        
+        print(str(x1)+","+str(y1))
+        print(str(x1+page.width)+","+str(y1+page.height))                   
+        import platform        
+        if (platform.system() == "Linux"):
+            screen = ImageGrab.grab()       
+        else:
+            screen = ImageGrab.grab(bbox=(x1,y1, x1+page.width, y1+page.height))
+        screen.save(e.path+".png")
+
+        # mydata = [
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},
+        #     {"name":"john","last":"smith","age":12},    
+        # ]
+        # doc = SimpleDocTemplate(e.path+"youfile222.pdf",pagesize=landscape(letter))
+        # data = [[value for value in item.values()] for item in mydata]
+        # # data.insert(0, ["name", "last", "age"])
+        # table = Table(data, colWidths=[10*mm, 20*mm, 10*mm])
+        # header_text = "My PDF Data"
+        # header = Paragraph(header_text) 
+        # # OPTIONAL IF YOU WANT STYLING THE TABLE LIKE ADD COLOR,
+        # # BACKGROUND COLOR , FONT SIZE , FONT NAME ,  
+        # # table.setStyle([
+        # #     ('BACKGROUND', (0, 0), (-1, 0), colors.blue),
+        # #     ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        # #     ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        # #     ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        # #     ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        # #     ('BACKGROUND', (0, -1), (-1, -1), colors.beige),
+        # #     ('GRID', (0, 0), (-1, -1), 1, colors.black) 
+        # # ])	 
+        # doc.build([header,table])    
+
+    pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
+    # pick_files_dialog.allowed_extensions=["png"]
+    page.overlay.append(pick_files_dialog)
+    page.update()
+    
+
     def items(count):
         items = []
         for i in range(1, count + 1):
@@ -486,6 +551,15 @@ def main(page: ft.Page):
                     alignment=ft.alignment.center
                 )
             )
+
+            items.append(
+                ft.Container(                    
+                    content=ft.ElevatedButton("Export",   on_click=lambda _: pick_files_dialog.save_file()),
+                    alignment=ft.alignment.center
+                )
+            )
+
+
 
             items.append(
                 ft.Container(
